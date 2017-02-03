@@ -1,0 +1,9 @@
+from kivy.network.urlrequest import UrlRequest
+
+def got_weather(req, results):
+    for key, value in results['weather'][0].items():
+        print(key, ': ', value)
+
+req = UrlRequest(
+    'http://api.openweathermap.org/data/2.5/weather?q=Paris,fr',
+    got_weather)

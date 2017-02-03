@@ -1,0 +1,84 @@
+#:import Factory kivy.factory.Factory
+#:import Window kivy.core.window.Window
+
+
+<HomeLayout>:
+    background_color: .17, .17, .17, 1
+    source: 'resources/backgrounds/background.png'
+    keep_ratio: False
+    # ids
+    graph_area: graph_plot_id
+    text_input: text_input_id
+    send_button: send_btn_id
+    response_layout: response_layout_id
+    voice_search_button: voice_btn_id
+
+    allow_stretch: True
+
+    ShadedRoundButton:
+        id: send_btn_id
+        size_hint: None, None
+        size: '50dp', '50dp'
+        pos_hint: {'center_x': 0.9, 'y': 0.84}
+        background_color: 1, 1, 1, .1
+        text: '>'
+        font_name: "resources/fonts/OpenSans-CondLight.ttf"
+        on_press: root.send_command()
+
+    FlatTextInput:
+        id: text_input_id
+        size_hint: 0.7, None
+        height: '80dp'
+        pos_hint: {'center_x': 0.4, 'y': 0.75}
+        foreground_color: 1, 1, 1, 1
+
+    VoiceButton:
+        id: voice_btn_id
+        bubble_max: 80, 80
+        bubble_min: 65, 65
+        size_hint: None, None
+        size: '65dp', '65dp'
+        background_color: 1, 1, 1, 0.3
+        source: "resources/icons/ic_voice_search.png"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+        on_press: root.start_recognition()
+        on_release: root.stop_recognition()
+
+    Graph:
+        size_hint_y: 0.2
+        id: graph_plot_id
+        padding: 0
+        xmin: -100
+        xmax: 100
+        ymin: -15
+        ymax: 20
+
+    ScrollView:
+        pos_hint: {'center_x': 0.5, 'y': 0.32}
+        size_hint: 0.9, None
+        height: 0.44 * Window.height
+
+        ResultsLayout:
+            id: response_layout_id
+            background_color: 0, 0, 0, 0
+            cols: 1
+            spacing: 2
+            size_hint_y: None
+            height: self.parent.height
+            ChatWidget:
+                text: 'Hi. How can I help you?'
+                align: 'left'
+
+
+# list of screens
+<HomeScreen@Screen>:
+    name: 'homescreen'
+    HomeLayout:
+
+
+# screen manager
+<AliceScreenManager>:
+    current: 'homescreen'
+
+    HomeScreen:
+        
